@@ -6,21 +6,21 @@ using System.Numerics;
 
 namespace Dirichlet.Numerics
 {
-    public struct Int128 : IFormattable, IComparable, IComparable<Int128>, IEquatable<Int128>
+    public readonly struct Int128 : IFormattable, IComparable, IComparable<Int128>, IEquatable<Int128>
     {
-        private UInt128 v;
+        private readonly UInt128 _v;
 
         private static readonly Int128 minValue = (Int128)((UInt128)1 << 127);
         private static readonly Int128 maxValue = (Int128)(((UInt128)1 << 127) - 1);
         private static readonly Int128 zero = (Int128)0;
         private static readonly Int128 one = (Int128)1;
         private static readonly Int128 minusOne = (Int128)(-1);
-
-        public static Int128 MinValue { get { return minValue; } }
-        public static Int128 MaxValue { get { return maxValue; } }
-        public static Int128 Zero { get { return zero; } }
-        public static Int128 One { get { return one; } }
-        public static Int128 MinusOne { get { return minusOne; } }
+r
+        public static ref readonly Int128 MinValue { get { return ref minValue; } }
+        public static ref readonly Int128 MaxValue { get { return ref maxValue; } }
+        public static ref readonly Int128 Zero { get { return ref zero; } }
+        public static ref readonly Int128 One { get { return ref one; } }
+        public static ref readonly Int128 MinusOne { get { return ref minusOne; } }
 
         public static Int128 Parse(string value)
         {
@@ -191,47 +191,47 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static explicit operator sbyte(Int128 a)
+        public static explicit operator sbyte(in Int128 a)
         {
             return (sbyte)a.v.S0;
         }
 
-        public static explicit operator byte(Int128 a)
+        public static explicit operator byte(in Int128 a)
         {
             return (byte)a.v.S0;
         }
 
-        public static explicit operator short(Int128 a)
+        public static explicit operator short(in Int128 a)
         {
             return (short)a.v.S0;
         }
 
-        public static explicit operator ushort(Int128 a)
+        public static explicit operator ushort(in Int128 a)
         {
             return (ushort)a.v.S0;
         }
 
-        public static explicit operator int(Int128 a)
+        public static explicit operator int(in Int128 a)
         {
             return (int)a.v.S0;
         }
 
-        public static explicit operator uint(Int128 a)
+        public static explicit operator uint(in Int128 a)
         {
             return (uint)a.v.S0;
         }
 
-        public static explicit operator long(Int128 a)
+        public static explicit operator long(in Int128 a)
         {
             return (long)a.v.S0;
         }
 
-        public static explicit operator ulong(Int128 a)
+        public static explicit operator ulong(in Int128 a)
         {
             return a.v.S0;
         }
 
-        public static explicit operator decimal(Int128 a)
+        public static explicit operator decimal(in Int128 a)
         {
             if (a.IsNegative)
             {
@@ -242,7 +242,7 @@ namespace Dirichlet.Numerics
             return (decimal)a.v;
         }
 
-        public static implicit operator BigInteger(Int128 a)
+        public static implicit operator BigInteger(in Int128 a)
         {
             if (a.IsNegative)
             {
@@ -253,7 +253,7 @@ namespace Dirichlet.Numerics
             return (BigInteger)a.v;
         }
 
-        public static explicit operator float(Int128 a)
+        public static explicit operator float(in Int128 a)
         {
             if (a.IsNegative)
             {
@@ -264,7 +264,7 @@ namespace Dirichlet.Numerics
             return UInt128.ConvertToFloat(ref a.v);
         }
 
-        public static explicit operator double(Int128 a)
+        public static explicit operator double(in Int128 a)
         {
             if (a.IsNegative)
             {
@@ -275,69 +275,69 @@ namespace Dirichlet.Numerics
             return UInt128.ConvertToDouble(ref a.v);
         }
 
-        public static Int128 operator <<(Int128 a, int b)
+        public static Int128 operator <<(in Int128 a, int b)
         {
             Int128 c;
             UInt128.LeftShift(out c.v, ref a.v, b);
             return c;
         }
 
-        public static Int128 operator >>(Int128 a, int b)
+        public static Int128 operator >>(in Int128 a, int b)
         {
             Int128 c;
             UInt128.ArithmeticRightShift(out c.v, ref a.v, b);
             return c;
         }
 
-        public static Int128 operator &(Int128 a, Int128 b)
+        public static Int128 operator &(in Int128 a, Int128 b)
         {
             Int128 c;
             UInt128.And(out c.v, ref a.v, ref b.v);
             return c;
         }
 
-        public static int operator &(Int128 a, int b)
+        public static int operator &(in Int128 a, int b)
         {
             return (int)(a.v & (uint)b);
         }
 
-        public static int operator &(int a, Int128 b)
+        public static int operator &(int a, in Int128 b)
         {
             return (int)(b.v & (uint)a);
         }
 
-        public static long operator &(Int128 a, long b)
+        public static long operator &(in Int128 a, long b)
         {
             return (long)(a.v & (ulong)b);
         }
 
-        public static long operator &(long a, Int128 b)
+        public static long operator &(long a, in Int128 b)
         {
             return (long)(b.v & (ulong)a);
         }
 
-        public static Int128 operator |(Int128 a, Int128 b)
+        public static Int128 operator |(in Int128 a, in Int128 b)
         {
             Int128 c;
             UInt128.Or(out c.v, ref a.v, ref b.v);
             return c;
         }
 
-        public static Int128 operator ^(Int128 a, Int128 b)
+        public static Int128 operator ^(in Int128 a, in Int128 b)
         {
             Int128 c;
             UInt128.ExclusiveOr(out c.v, ref a.v, ref b.v);
             return c;
         }
 
-        public static Int128 operator ~(Int128 a)
+        public static Int128 operator ~(in Int128 a)
         {
             Int128 c;
             UInt128.Not(out c.v, ref a.v);
             return c;
         }
 
-        public static Int128 operator +(Int128 a, long b)
+        public static Int128 operator +(in Int128 a, long b)
         {
             Int128 c;
             if (b < 0)
@@ -347,7 +347,7 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static Int128 operator +(long a, Int128 b)
+        public static Int128 operator +(long a, in Int128 b)
         {
             Int128 c;
             if (a < 0)
@@ -357,7 +357,7 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static Int128 operator +(Int128 a, Int128 b)
+        public static Int128 operator +(in Int128 a, in Int128 b)
         {
             Int128 c;
             UInt128.Add(out c.v, ref a.v, ref b.v);
@@ -371,7 +371,7 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static Int128 operator -(Int128 a, long b)
+        public static Int128 operator -(in Int128 a, long b)
         {
             Int128 c;
             if (b < 0)
@@ -381,19 +381,19 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static Int128 operator -(Int128 a, Int128 b)
+        public static Int128 operator -(in Int128 a, in Int128 b)
         {
             Int128 c;
             UInt128.Subtract(out c.v, ref a.v, ref b.v);
             return c;
         }
 
-        public static Int128 operator +(Int128 a)
+        public static Int128 operator +(in Int128 a)
         {
             return a;
         }
 
-        public static Int128 operator -(Int128 a)
+        public static Int128 operator -(in Int128 a)
         {
             Int128 c;
             UInt128.Negate(out c.v, ref a.v);
@@ -407,147 +407,147 @@ namespace Dirichlet.Numerics
             return c;
         }
 
-        public static Int128 operator *(Int128 a, int b)
+        public static Int128 operator *(in Int128 a, int b)
         {
             Int128 c;
             Multiply(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator *(int a, Int128 b)
+        public static Int128 operator *(int a, in Int128 b)
         {
             Int128 c;
             Multiply(out c, ref b, a);
             return c;
         }
 
-        public static Int128 operator *(Int128 a, uint b)
+        public static Int128 operator *(in Int128 a, uint b)
         {
             Int128 c;
             Multiply(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator *(uint a, Int128 b)
+        public static Int128 operator *(uint a, in Int128 b)
         {
             Int128 c;
             Multiply(out c, ref b, a);
             return c;
         }
 
-        public static Int128 operator *(Int128 a, long b)
+        public static Int128 operator *(in Int128 a, long b)
         {
             Int128 c;
             Multiply(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator *(long a, Int128 b)
+        public static Int128 operator *(long a, in Int128 b)
         {
             Int128 c;
             Multiply(out c, ref b, a);
             return c;
         }
 
-        public static Int128 operator *(Int128 a, ulong b)
+        public static Int128 operator *(in Int128 a, ulong b)
         {
             Int128 c;
             Multiply(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator *(ulong a, Int128 b)
+        public static Int128 operator *(ulong a, in Int128 b)
         {
             Int128 c;
             Multiply(out c, ref b, a);
             return c;
         }
 
-        public static Int128 operator *(Int128 a, Int128 b)
+        public static Int128 operator *(in Int128 a, in Int128 b)
         {
             Int128 c;
             Multiply(out c, ref a, ref b);
             return c;
         }
 
-        public static Int128 operator /(Int128 a, int b)
+        public static Int128 operator /(in Int128 a, int b)
         {
             Int128 c;
             Divide(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator /(Int128 a, uint b)
+        public static Int128 operator /(in Int128 a, uint b)
         {
             Int128 c;
             Divide(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator /(Int128 a, long b)
+        public static Int128 operator /(in Int128 a, long b)
         {
             Int128 c;
             Divide(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator /(Int128 a, ulong b)
+        public static Int128 operator /(in Int128 a, ulong b)
         {
             Int128 c;
             Divide(out c, ref a, b);
             return c;
         }
 
-        public static Int128 operator /(Int128 a, Int128 b)
+        public static Int128 operator /(in Int128 a, in Int128 b)
         {
             Int128 c;
             Divide(out c, ref a, ref b);
             return c;
         }
 
-        public static int operator %(Int128 a, int b)
+        public static int operator %(in Int128 a, int b)
         {
             return Remainder(ref a, b);
         }
 
-        public static int operator %(Int128 a, uint b)
+        public static int operator %(in Int128 a, uint b)
         {
             return Remainder(ref a, b);
         }
 
-        public static long operator %(Int128 a, long b)
+        public static long operator %(in Int128 a, long b)
         {
             return Remainder(ref a, b);
         }
 
-        public static long operator %(Int128 a, ulong b)
+        public static long operator %(in Int128 a, ulong b)
         {
             return Remainder(ref a, b);
         }
 
-        public static Int128 operator %(Int128 a, Int128 b)
+        public static Int128 operator %(in Int128 a, in Int128 b)
         {
             Int128 c;
             Remainder(out c, ref a, ref b);
             return c;
         }
 
-        public static bool operator <(Int128 a, UInt128 b)
+        public static bool operator <(in Int128 a, in UInt128 b)
         {
             return a.CompareTo(b) < 0;
         }
 
-        public static bool operator <(UInt128 a, Int128 b)
+        public static bool operator <(in UInt128 a, in Int128 b)
         {
             return b.CompareTo(a) > 0;
         }
 
-        public static bool operator <(Int128 a, Int128 b)
+        public static bool operator <(in Int128 a, in Int128 b)
         {
             return LessThan(ref a.v, ref b.v);
         }
 
-        public static bool operator <(Int128 a, int b)
+        public static bool operator <(in Int128 a, int b)
         {
             return LessThan(ref a.v, b);
         }
